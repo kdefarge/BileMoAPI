@@ -7,10 +7,10 @@ BileMoAPI is a Symfony API application with [api-platform](https://github.com/ap
 
 ## Table of Contents
 
-  - [Installation](#Installation)
-  - [Setup](#Setup)
-  - [Fixture](#Fixture)
-  - [Maintainers](#Maintainers)
+-   [Installation](#Installation)
+-   [Setup](#Setup)
+-   [Fixture](#Fixture)
+-   [Maintainers](#Maintainers)
 
 ## Installation
 
