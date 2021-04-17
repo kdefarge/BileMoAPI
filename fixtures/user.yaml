@@ -1,0 +1,8 @@
+App\Entity\User:
+  user{1..50}:
+    custumer: '@custumer*'
+    email (unique): '<email()>'
+    firstname: '<firstName()>'
+    lastname: '<lastName()>'
+    created_date: '<dateTimeInInterval("-200 days", "-50 days", "Europe/Paris")>'
+    updated_date: '<dateTimeInInterval($created_date, "-1 days", "Europe/Paris")>'

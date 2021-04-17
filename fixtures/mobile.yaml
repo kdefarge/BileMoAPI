@@ -1,0 +1,8 @@
+App\Entity\Mobile:
+  mobile{1..20}:
+    modelName (unique): 'sPhone <strtoupper(<bothify("??##")>)>'
+    description: '<paragraph(10,true)>'
+    price: '<numberBetween(10000,60000)>'
+    stock: '<numberBetween(0,1337)>'
+    created_date: '<dateTimeInInterval("-200 days", "-50 days", "Europe/Paris")>'
+    updated_date: '<dateTimeInInterval($created_date, "-1 days", "Europe/Paris")>'
