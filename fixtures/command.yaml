@@ -1,0 +1,18 @@
+parameters:
+  status:
+    - "En attente"
+    - "Validé"
+    - "En cours"
+    - "Terminé"
+App\Entity\Command:
+  command{1..200}:
+    user: '@user*'
+    status: '<randomElement(<{status}>)>'
+    created_date: '<dateTimeInInterval("-200 days", "-50 days", "Europe/Paris")>'
+    updated_date: '<dateTimeInInterval($created_date, "-1 days", "Europe/Paris")>'
+    __calls:
+      - addMobile: ['@mobile*']
+      - addMobile (75%?): ['@mobile*']
+      - addMobile (50%?): ['@mobile*']
+      - addMobile (25%?): ['@mobile*']
+      - addMobile (25%?): ['@mobile*']

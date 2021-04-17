@@ -1,0 +1,21 @@
+parameters:
+  admin_email: 'admin@BileMo.com'
+  admin_password: 'toctoc'
+  custumer_password: 'toctoc'
+
+App\Entity\Custumer:
+  admin:
+    email (unique): '<{admin_email}>'
+    roles: '["ROLE_ADMIN"]'
+    password: '<helpEncodePassword(<{admin_password}>)>'
+    name (unique): '<username()>'
+    fullname (unique): '<name()>'
+    created_date: '<dateTimeInInterval("-200 days", "-50 days", "Europe/Paris")>'
+    updated_date: '<dateTimeInInterval($created_date, "-1 days", "Europe/Paris")>'
+  custumer{1..3}:
+    email (unique): '<email()>'
+    password: '<helpEncodePassword(<{custumer_password}>)>'
+    name (unique): '<username()>'
+    fullname (unique): '<name()>'
+    created_date: '<dateTimeInInterval("-200 days", "-50 days", "Europe/Paris")>'
+    updated_date: '<dateTimeInInterval($created_date, "-1 days", "Europe/Paris")>'
