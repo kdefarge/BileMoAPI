@@ -7,14 +7,14 @@ BileMoAPI is a Symfony API application with [api-platform](https://github.com/ap
 
 ## Table of Contents
 
-- [Installation](#Installation)
-- [Setup](#Setup)
-- [Fixture](#Fixture)
-- [Maintainers](#Maintainers)
+-  [Installation](#Installation)
+-  [Setup](#Setup)
+-  [Fixture](#Fixture)
+-  [Maintainers](#Maintainers)
 
 ## Installation
 
-*   install BileMoAPI with composer
+### install BileMoAPI with composer
 
 ```bash
 git clone git@github.com:kdefarge/BileMoAPI.git
@@ -24,7 +24,7 @@ composer install
 
 ## Setup
 
-*   Update .env file
+### Update .env file
 
 ```bash
 # Config database
@@ -32,7 +32,7 @@ composer install
 DATABASE_URL="mysql://USER:PASSWRD@SERVER:PORT/DB_NAME?serverVersion=mariadb-X.X.X"
 ```
 
-*   Install database
+### Install database
 
 ```bash
 # Doctrine can create the DB_NAME database for you
@@ -43,7 +43,7 @@ php bin/console doctrine:migrations:migrate
 
 ## Fixture
 
-*   Run dev fixture
+### Run dev fixture
 
 ```bash
 # load all the 'dev' fixtures
@@ -53,7 +53,6 @@ php bin/console hautelook:fixtures:load
 ## Maintainers
 
 [@kdefarge](https://github.com/kdefarge)
-
 
 ## License
 
