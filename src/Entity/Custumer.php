@@ -7,9 +7,28 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=CustumerRepository::class)
+ * @ApiResource(
+ *      attributes={"formats"={"json"}},
+ *      collectionOperations={
+ *          "get" = {
+ *              "normalization_context" = {"groups"={"custumer:co:get:read"}, "swagger_definition_name"="collection"},
+ *              "security"="is_granted('ROLE_ADMIN')",
+ *              "security_message"="Only authenticated users can access this operation."
+ *          },
+ *      },
+ *      itemOperations={
+ *          "get" = {
+ *              "normalization_context" = {"groups"={"custumer:io:get:read"}, "swagger_definition_name"="detail"},
+ *              "security"="is_granted('ROLE_ADMIN') or object == user",
+ *              "security_message"="Only authenticated users can access this operation."
+ *          },
+ *      },
+ * )
  */
 class Custumer implements UserInterface
 {
@@ -17,11 +36,13 @@ class Custumer implements UserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"custumer:co:get:read","custumer:io:get:read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Groups({"custumer:co:get:read","custumer:io:get:read"})
      */
     private $email;
 
@@ -38,20 +59,24 @@ class Custumer implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"custumer:co:get:read","custumer:io:get:read"})
      */
     private $name;
 
     /**
+     * @Groups({"custumer:co:get:read","custumer:io:get:read"})
      * @ORM\Column(type="string", length=255)
      */
     private $fullname;
 
     /**
+     * @Groups({"custumer:co:get:read","custumer:io:get:read"})
      * @ORM\Column(type="datetime")
      */
     private $created_date;
 
     /**
+     * @Groups({"custumer:co:get:read","custumer:io:get:read"})
      * @ORM\Column(type="datetime")
      */
     private $updated_date;
