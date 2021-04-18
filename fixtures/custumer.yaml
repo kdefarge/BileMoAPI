@@ -1,12 +1,14 @@
 parameters:
   admin_email: 'admin@BileMo.com'
   admin_password: 'toctoc'
+  admin_access:
+    - "ROLE_ADMIN"
   custumer_password: 'toctoc'
 
 App\Entity\Custumer:
   admin:
     email (unique): '<{admin_email}>'
-    roles: '["ROLE_ADMIN"]'
+    roles: '<{admin_access}>'
     password: '<helpEncodePassword(<{admin_password}>)>'
     name (unique): '<username()>'
     fullname (unique): '<name()>'

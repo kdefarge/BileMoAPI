@@ -37,8 +37,8 @@ DATABASE_URL="mysql://USER:PASSWRD@SERVER:PORT/DB_NAME?serverVersion=mariadb-X.X
 ```bash
 # Doctrine can create the DB_NAME database for you
 php bin/console doctrine:database:create
-# executes all migration files
-php bin/console doctrine:migrations:migrate
+# Create database schema
+php bin/console doctrine:schema:create
 ```
 
 ## Fixture

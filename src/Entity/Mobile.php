@@ -6,9 +6,26 @@ use App\Repository\MobileRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=MobileRepository::class)
+ * @ApiResource(
+ *      attributes={"formats"={"json"}},
+ *      collectionOperations={
+ *          "get" = {
+ *              "normalization_context" = {"groups"={"mobile:co:get:read"}, "swagger_definition_name"="collection"},
+ *              "security"="is_granted('ROLE_ADMIN') or is_granted('ROLE_USER')",
+ *              "security_message"="Only authenticated users can assess this operation."
+ *          },
+ *      },
+ *      itemOperations={
+ *          "get" = {
+ *              "normalization_context" = {"groups"={"mobile:io:get:read"}, "swagger_definition_name"="detail"}
+ *          },
+ *      },
+ * )
  */
 class Mobile
 {
@@ -21,6 +38,7 @@ class Mobile
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"mobile:co:get:read","mobile:io:get:read"})
      */
     private $modelName;
 
