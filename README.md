@@ -10,6 +10,7 @@ BileMoAPI is a Symfony API application with [api-platform](https://github.com/ap
 -   [Installation](#Installation)
 -   [Setup](#Setup)
 -   [Fixture](#Fixture)
+-   [Test](#Test)
 -   [Maintainers](#Maintainers)
 
 ## Installation
@@ -48,6 +49,30 @@ php bin/console doctrine:schema:create
 ```bash
 # load all the 'dev' fixtures
 php bin/console hautelook:fixtures:load
+```
+
+## Test
+
+### Select your PHPUnit version
+
+```xml
+<!-- phpunit.xml.dist -->
+<server name="SYMFONY_PHPUNIT_VERSION" value="9.5.4" />
+```
+
+### Run test
+
+```bash
+php bin/phpunit
+```
+
+### Test other database
+
+Update .env.test and DATABASE_URL then create the database with schema
+
+```bash
+php bin/console doctrine:database:create --env=test
+php bin/console doctrine:schema:create --env=test
 ```
 
 ## Maintainers
