@@ -9,7 +9,7 @@ class MobileResourceTest extends CustomApiTestCase
 {
     use ReloadDatabaseTrait;
 
-    Public function testReadMobile()
+    public function testReadMobile()
     {
         $client = self::createClient();
 
@@ -19,24 +19,9 @@ class MobileResourceTest extends CustomApiTestCase
 
         $this->assertResponseStatusCodeSame(401);
 
-        $email = 'user1@example.com';
-        $password = 'KnockKnock';
+        $this->createCustumerAndLogin($client, 'custumerMobile@example.com', 'knockknock');
 
-        $email2 = 'user2@example.com';
-
-        $user1 = $this->createCustumer($email, $password);
-        $user2 = $this->createCustumer($email2, $password);
-        $this->login($client, $email, $password);
-
-        $this->assertResponseStatusCodeSame(204);
-
-        $client->request('GET', '/api/custumers/'.$user2->getId(), [
-            'headers' => ['accept' => 'application/json']
-        ]);
-
-        $this->assertResponseStatusCodeSame(403);
-
-        $client->request('GET', '/api/custumers/'.$user1->getId(), [
+        $client->request('GET', '/api/mobiles', [
             'headers' => ['accept' => 'application/json']
         ]);
 

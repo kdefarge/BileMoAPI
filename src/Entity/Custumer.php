@@ -13,13 +13,13 @@ use Symfony\Component\Serializer\Annotation\Groups;
 /**
  * @ORM\Entity(repositoryClass=CustumerRepository::class)
  * @ApiResource(
- *      attributes={"formats"={"json"}},
+ *      attributes={
+ *          "formats"={"json"},
+ *          "security"="is_granted('ROLE_ADMIN')",
+ *          "security_message"="Only authenticated users can access this operation.",
+ *      },
  *      collectionOperations={
- *          "get" = {
- *              "normalization_context" = {"groups"={"custumer:co:get:read"}, "swagger_definition_name"="collection"},
- *              "security"="is_granted('ROLE_ADMIN')",
- *              "security_message"="Only authenticated users can access this operation."
- *          },
+ *          "get", "post"
  *      },
  *      itemOperations={
  *          "get" = {
@@ -27,6 +27,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *              "security"="is_granted('ROLE_ADMIN') or object == user",
  *              "security_message"="Only authenticated users can access this operation."
  *          },
+ *          "delete",
+ *          "put"
  *      },
  * )
  */
