@@ -58,6 +58,8 @@ class User
     public function __construct()
     {
         $this->commands = new ArrayCollection();
+        $this->created_date = new \DateTime();
+        $this->updated_date = new \DateTime();
     }
 
     public function getId(): ?int

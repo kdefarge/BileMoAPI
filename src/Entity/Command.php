@@ -47,6 +47,8 @@ class Command
     public function __construct()
     {
         $this->mobiles = new ArrayCollection();
+        $this->created_date = new \DateTime();
+        $this->updated_date = new \DateTime();
     }
 
     public function getId(): ?int
