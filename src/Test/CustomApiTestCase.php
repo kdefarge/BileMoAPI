@@ -21,8 +21,18 @@ class CustomApiTestCase extends ApiTestCase
         $custumer->setPassword($password);
         $custumer->setName($name);
         $custumer->setFullname($name);
-        $custumer->setCreatedDate(new \DateTime());
-        $custumer->setUpdatedDate(new \DateTime());
+
+        $entityManager = $this->getEntityManager();
+        $entityManager->persist($custumer);
+        $entityManager->flush();
+
+        return $custumer;
+    }
+
+    protected function createAdmin(string $email, string $plainPassword): Custumer
+    {
+        $custumer = $this->createCustumer($email, $plainPassword);
+        $custumer->setRoles(['ROLE_ADMIN']);
 
         $entityManager = $this->getEntityManager();
         $entityManager->persist($custumer);

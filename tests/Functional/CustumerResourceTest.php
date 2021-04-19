@@ -39,4 +39,26 @@ class CustumerResourceTest extends CustomApiTestCase
 
         $this->assertResponseStatusCodeSame(200);
     }
+
+    public function testAdminLogin()
+    {
+        $client = self::createClient();
+
+        $email3 = 'admin@example.com';
+        $email4 = 'user4@example.com';
+        $password = 'KnockKnock';
+
+        $user3 = $this->createAdmin($email3, $password);
+        $user4 = $this->createCustumer($email4, $password);
+
+        $this->login($client, $email3, $password);
+
+        $this->assertResponseStatusCodeSame(204);
+
+        $client->request('GET', '/api/custumers/' . $user4->getId(), [
+            'headers' => ['accept' => 'application/json']
+        ]);
+
+        $this->assertResponseStatusCodeSame(200);
+    }
 }
