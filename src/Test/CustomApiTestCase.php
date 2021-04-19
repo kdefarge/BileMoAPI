@@ -41,6 +41,15 @@ class CustomApiTestCase extends ApiTestCase
         ]);
     }
 
+    protected function createCustumerAndLogin(Client $client, string $email, string $plainPassword): Custumer
+    {
+        $custumer = $this->createCustumer($email, $plainPassword);
+
+        $this->login($client, $email, $plainPassword);
+
+        return $custumer;
+    }
+
     protected function getEntityManager(): EntityManagerInterface
     {
         return self::$container->get('doctrine')->getManager();
