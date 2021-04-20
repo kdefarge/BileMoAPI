@@ -11,20 +11,6 @@ class MobileResourceTest extends CustomApiTestCase
 
     public function testReadMobile()
     {
-        $client = self::createClient();
-
-        $client->request('GET', '/api/mobiles', [
-            'headers' => ['accept' => 'application/json']
-        ]);
-
-        $this->assertResponseStatusCodeSame(401);
-
-        $this->createCustumerAndLogin($client, 'custumerMobile@example.com', 'knockknock');
-
-        $client->request('GET', '/api/mobiles', [
-            'headers' => ['accept' => 'application/json']
-        ]);
-
-        $this->assertResponseStatusCodeSame(200);
+        
     }
 }

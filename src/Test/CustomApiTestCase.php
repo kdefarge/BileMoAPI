@@ -64,4 +64,15 @@ class CustomApiTestCase extends ApiTestCase
     {
         return self::$container->get('doctrine')->getManager();
     }
+
+    protected function retrieveToken(Client $client, string $email, string $plainPassword)
+    {
+        $response = $client->request('POST', '/authentication_token', [
+            'headers' => ['Content-Type' => 'application/json'],
+            'json' => [
+                'email' =>  $email,
+                'password' => $plainPassword,
+            ],
+        ]);
+    }
 }
