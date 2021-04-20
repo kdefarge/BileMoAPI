@@ -42,6 +42,24 @@ php bin/console doctrine:database:create
 php bin/console doctrine:schema:create
 ```
 
+### Generate the SSL keys
+
+You need OpenSLL and run this command to generate the SSL keys
+
+```bash
+php bin/console lexik:jwt:generate-keypair
+```
+
+Update jwt config in your .env
+
+```bash
+###> lexik/jwt-authentication-bundle ###
+JWT_SECRET_KEY=%kernel.project_dir%/config/jwt/private.pem
+JWT_PUBLIC_KEY=%kernel.project_dir%/config/jwt/public.pem
+JWT_PASSPHRASE=b11c0ae29c7f88b75d5e71281f38ac69
+###< lexik/jwt-authentication-bundle ###
+```
+
 ## Fixture
 
 ### Run dev fixture
