@@ -44,6 +44,7 @@ class AuthenticationTest extends CustomApiTestCase
             ],
             'auth_bearer' => $json['token']
         ]);
+        
         $this->assertResponseIsSuccessful();
     }
 }

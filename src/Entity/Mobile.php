@@ -15,14 +15,16 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *      attributes={"formats"={"json"}},
  *      collectionOperations={
  *          "get" = {
- *              "normalization_context" = {"groups"={"mobile:co:get:read"}, "swagger_definition_name"="collection"},
+ *              "normalization_context" = {"groups"={"mobile:co:get"}, "swagger_definition_name"="collection"},
  *              "security"="is_granted('ROLE_USER')",
  *              "security_message"="Only authenticated users can assess this operation."
  *          },
  *      },
  *      itemOperations={
  *          "get" = {
- *              "normalization_context" = {"groups"={"mobile:io:get:read"}, "swagger_definition_name"="detail"}
+ *              "normalization_context" = {"groups"={"mobile:io:get"}, "swagger_definition_name"="detail"},
+ *              "security"="is_granted('ROLE_USER')",
+ *              "security_message"="Only authenticated users can assess this operation."
  *          },
  *      },
  * )
@@ -33,27 +35,31 @@ class Mobile
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"mobile:co:get","mobile:io:get"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"mobile:co:get:read","mobile:io:get:read"})
+     * @Groups({"mobile:co:get","mobile:io:get"})
      */
     private $modelName;
 
     /**
      * @ORM\Column(type="text")
+     * @Groups({"mobile:io:get"})
      */
     private $description;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"mobile:co:get","mobile:io:get"})
      */
     private $price;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"mobile:co:get","mobile:io:get"})
      */
     private $stock;
 

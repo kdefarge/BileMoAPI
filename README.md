@@ -78,10 +78,17 @@ php bin/console hautelook:fixtures:load
 <server name="SYMFONY_PHPUNIT_VERSION" value="9.5.4" />
 ```
 
-### Run test
+### Run all test
 
 ```bash
 php bin/phpunit
+```
+
+### Run one test
+
+```bash
+php bin/phpunit --filter testLoginJWT
+php bin/phpunit --filter testReadMobile
 ```
 
 ### Test other database
