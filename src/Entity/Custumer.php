@@ -12,35 +12,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=CustumerRepository::class)
- * @ApiResource(
- *      attributes={
- *          "formats"={"json"},
- *          "security"="is_granted('ROLE_ADMIN')",
- *          "security_message"="Only admin can access this operation.",
- *      },
- *      normalizationContext={
- *          {"groups"={"admin:read"}, "swagger_definition_name"="admin-read"},
- *          "security"="is_granted('ROLE_ADMIN')",
- *          "security_message"="Only admin can access this operation."
- *      },
- *      denormalizationContext={
- *          {"groups"={"admin:write"}, "swagger_definition_name"="admin-write"},
- *          "security"="is_granted('ROLE_ADMIN')",
- *          "security_message"="Only admin can access this operation."
- *      },
- *      collectionOperations={
- *          "get", "post"
- *      },
- *      itemOperations={
- *          "get" = {
- *              "normalization_context" = {"groups"={"custumer:io:get"}, "swagger_definition_name"="detail"},
- *              "security"="is_granted('OWNER', object)",
- *              "security_message"="Only authenticated users can access this operation."
- *          },
- *          "delete",
- *          "put"
- *      },
- * )
  */
 class Custumer implements UserInterface
 {
