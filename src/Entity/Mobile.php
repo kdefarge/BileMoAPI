@@ -16,7 +16,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *      collectionOperations={
  *          "get" = {
  *              "normalization_context" = {"groups"={"mobile:co:get:read"}, "swagger_definition_name"="collection"},
- *              "security"="is_granted('ROLE_ADMIN') or is_granted('ROLE_USER')",
+ *              "security"="is_granted('ROLE_USER')",
  *              "security_message"="Only authenticated users can assess this operation."
  *          },
  *      },
