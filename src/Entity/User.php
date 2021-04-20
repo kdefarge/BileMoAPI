@@ -6,9 +6,26 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @ApiResource(
+ *      attributes={"formats"={"json"}},
+ *      collectionOperations={
+ *          "get" = {
+ *              "normalization_context" = {"groups"={"mobile:co:get"}, "swagger_definition_name"="collection"},
+ *              "security"="is_granted('ROLE_USER')",
+ *              "security_message"="Only authenticated users can assess this operation."
+ *          },
+ *      },
+ *      itemOperations={
+ *          "get" = {
+ *              "normalization_context" = {"groups"={"mobile:io:get"}, "swagger_definition_name"="detail"}
+ *          },
+ *      },
+ * )
  */
 class User
 {

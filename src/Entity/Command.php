@@ -12,6 +12,11 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Command
 {
+    const STATUS_WAITING = 'En attente';
+    const STATUS_VALID = 'Validé';
+    const STATUS_PROGRESS = 'En cours';
+    const STATUS_FINISHED = 'Terminé';
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -49,6 +54,7 @@ class Command
         $this->mobiles = new ArrayCollection();
         $this->created_date = new \DateTime();
         $this->updated_date = new \DateTime();
+        $this->status = self::STATUS_WAITING;
     }
 
     public function getId(): ?int

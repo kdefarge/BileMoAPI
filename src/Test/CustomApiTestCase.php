@@ -4,7 +4,10 @@ namespace App\Test;
 
 use ApiPlatform\Core\Bridge\Symfony\Bundle\Test\ApiTestCase;
 use ApiPlatform\Core\Bridge\Symfony\Bundle\Test\Client;
+use App\Entity\Command;
 use App\Entity\Custumer;
+use App\Entity\Mobile;
+use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 
 class CustomApiTestCase extends ApiTestCase
@@ -22,9 +25,7 @@ class CustomApiTestCase extends ApiTestCase
         $custumer->setName($name);
         $custumer->setFullname($name);
 
-        $entityManager = $this->getEntityManager();
-        $entityManager->persist($custumer);
-        $entityManager->flush();
+        $this->updateEntity($custumer);
 
         return $custumer;
     }
@@ -34,30 +35,73 @@ class CustomApiTestCase extends ApiTestCase
         $custumer = $this->createCustumer($email, $plainPassword);
         $custumer->setRoles(['ROLE_ADMIN']);
 
+        $this->updateEntity($custumer);
+
+        return $custumer;
+    }
+
+    protected function createMobile(string $modelName, string $description = '', $price = 0, $stock = 0): Mobile
+    {
+        $mobile = new Mobile();
+
+        $mobile->setModelName($modelName);
+        $mobile->setDescription($description);
+        $mobile->setPrice($price);
+        $mobile->setStock($stock);
+
+        $this->updateEntity($mobile);
+
+        return $mobile;
+    }
+
+    protected function createUser(Custumer $custumer, string $email, string $firstname = '', string $lastname = ''): User
+    {
+        $user = new User();
+
+        $user->setCustumer($custumer);
+        $user->setEmail($email);
+        $user->setFirstname($firstname);
+        $user->setLastname($lastname);
+
+        $this->updateEntity($user);
+
+        return $user;
+    }
+
+    protected function createCommand(User $user, array $mobiles, string $status = Command::STATUS_WAITING): Command
+    {
+        $command = new Command();
+
+        $command->setUser($user);
+        foreach($mobiles as $mobile) {
+            $command->addMobile($mobile);
+        }
+        $command->setStatus($status);
+
+        $this->updateEntity($command);
+
+        return $command;
+    }
+
+    protected function updateEntity($entity)
+    {
         $entityManager = $this->getEntityManager();
-        $entityManager->persist($custumer);
+        $entityManager->persist($entity);
         $entityManager->flush();
-
-        return $custumer;
     }
 
-    protected function login(Client $client, string $email, string $plainPassword)
+    protected function removeEntity($entity)
     {
-        $client->request('POST', '/login', [
-            'json' => [
-                'email' => $email,
-                'password' => $plainPassword
-            ],
-        ]);
+        $repository = $this->getRepository(get_class($entity));
+        $entity = $repository->find($entity->getId());
+        $entityManager = $this->getEntityManager();
+        $entityManager->remove($entity);
+        $entityManager->flush();
     }
 
-    protected function createCustumerAndLogin(Client $client, string $email, string $plainPassword): Custumer
+    protected function getRepository($entityClass)
     {
-        $custumer = $this->createCustumer($email, $plainPassword);
-
-        $this->login($client, $email, $plainPassword);
-
-        return $custumer;
+        return $this->getEntityManager()->getRepository($entityClass);
     }
 
     protected function getEntityManager(): EntityManagerInterface
@@ -68,11 +112,12 @@ class CustomApiTestCase extends ApiTestCase
     protected function retrieveToken(Client $client, string $email, string $plainPassword)
     {
         $response = $client->request('POST', '/authentication_token', [
-            'headers' => ['Content-Type' => 'application/json'],
             'json' => [
                 'email' =>  $email,
                 'password' => $plainPassword,
             ],
         ]);
+
+        return $response->toArray()['token'];
     }
 }
