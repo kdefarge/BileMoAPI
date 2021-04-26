@@ -21,9 +21,7 @@ class MobileResourceTest extends CustomApiTestCase
         $token = $this->retrieveToken($client, $email, $password);
 
         $client->request('GET', '/api/mobiles', [
-            'headers' => [
-                'accept' => 'application/json',
-            ],
+            'headers' => ['accept' => 'application/json'],
             'auth_bearer' => $token
         ]);
 
@@ -38,9 +36,7 @@ class MobileResourceTest extends CustomApiTestCase
         $this->assertResponseStatusCodeSame(401);
 
         $client->request('GET', '/api/mobiles/'.$mobile->getId(), [
-            'headers' => [
-                'accept' => 'application/json',
-            ],
+            'headers' => ['accept' => 'application/json'],
             'auth_bearer' => $token
         ]);
 
@@ -49,12 +45,15 @@ class MobileResourceTest extends CustomApiTestCase
         $this->removeEntity($mobile);
         
         $client->request('GET', '/api/mobiles/'.$mobile->getId(), [
-            'headers' => [
-                'accept' => 'application/json',
-            ],
+            'headers' => ['accept' => 'application/json'],
             'auth_bearer' => $token
         ]);
 
         $this->assertResponseStatusCodeSame(404);
+    }
+
+    public function testWriteMobile()
+    {
+        
     }
 }

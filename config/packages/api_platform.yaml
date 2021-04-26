@@ -15,3 +15,5 @@ api_platform:
     description: 'La vitrine de téléphones mobiles de l’entreprise BileMo'
     version: '2.0.0'
     show_webby: false
+    enable_swagger_ui: false
+    enable_re_doc: false
