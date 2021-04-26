@@ -12,6 +12,18 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=CustumerRepository::class)
+ * @ApiResource(
+ *      attributes={
+ *          "formats"={"jsonld","json"},
+ *          "security"="is_granted('ROLE_ADMIN')"
+ *      },
+ *      collectionOperations={
+ *          "get", "post"
+ *      },
+ *      itemOperations={
+ *          "patch", "delete", "get"
+ *      },
+ * )
  */
 class Custumer implements UserInterface
 {
@@ -19,13 +31,11 @@ class Custumer implements UserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"custumer:co:get:read","custumer:io:get:read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
-     * @Groups({"custumer:co:get:read","custumer:io:get:read"})
      */
     private $email;
 
@@ -42,24 +52,20 @@ class Custumer implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"custumer:co:get:read","custumer:io:get:read"})
      */
     private $name;
 
     /**
-     * @Groups({"custumer:co:get:read","custumer:io:get:read"})
      * @ORM\Column(type="string", length=255)
      */
     private $fullname;
 
     /**
-     * @Groups({"custumer:co:get:read","custumer:io:get:read"})
      * @ORM\Column(type="datetime")
      */
     private $created_date;
 
     /**
-     * @Groups({"custumer:co:get:read","custumer:io:get:read"})
      * @ORM\Column(type="datetime")
      */
     private $updated_date;

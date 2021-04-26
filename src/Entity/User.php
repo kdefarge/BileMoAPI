@@ -12,18 +12,23 @@ use Symfony\Component\Serializer\Annotation\Groups;
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ApiResource(
- *      attributes={"formats"={"json"}},
- *      collectionOperations={
- *          "get" = {
- *              "normalization_context" = {"groups"={"mobile:co:get"}, "swagger_definition_name"="collection"},
- *              "security"="is_granted('ROLE_USER')",
- *              "security_message"="Only authenticated users can assess this operation."
- *          },
+ *      attributes={
+ *          "formats"={"jsonld","json"},
+ *          "security"="is_granted('ROLE_ADMIN')"
  *      },
- *      itemOperations={
+ *      normalizationContext={
+ *          "groups"={"user:read"},
+ *          "swagger_definition_name"="read"
+ *      },
+ *      denormalizationContext={
+ *          "groups"={"user:write"},
+ *          "swagger_definition_name"="write"
+ *      },
+ *      collectionOperations={"get", "post"},
+ *      itemOperations={"patch", "delete",
  *          "get" = {
- *              "normalization_context" = {"groups"={"mobile:io:get"}, "swagger_definition_name"="detail"}
- *          },
+ *              "normalization_context" = {"groups"={"user:read:item"}, "swagger_definition_name"="read-item"},
+ *          }, 
  *      },
  * )
  */
@@ -33,21 +38,25 @@ class User
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"user:write","user:read","user:read:item"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180)
+     * @Groups({"user:write","user:read","user:read:item"})
      */
     private $email;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"user:write","user:read","user:read:item"})
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"user:write","user:read","user:read:item"})
      */
     private $lastname;
 

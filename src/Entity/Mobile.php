@@ -12,20 +12,33 @@ use Symfony\Component\Serializer\Annotation\Groups;
 /**
  * @ORM\Entity(repositoryClass=MobileRepository::class)
  * @ApiResource(
- *      attributes={"formats"={"json"}},
+ *      attributes={
+ *          "formats"={"jsonld","json"},
+ *          "security"="is_granted('ROLE_ADMIN')"
+ *      },
+ *      normalizationContext={
+ *          "groups"={"mobile:read"},
+ *          "swagger_definition_name"="read"
+ *      },
+ *      denormalizationContext={
+ *          "groups"={"mobile:write"},
+ *          "swagger_definition_name"="write"
+ *      },
  *      collectionOperations={
  *          "get" = {
- *              "normalization_context" = {"groups"={"mobile:co:get"}, "swagger_definition_name"="collection"},
  *              "security"="is_granted('ROLE_USER')",
  *              "security_message"="Only authenticated users can assess this operation."
  *          },
+ *          "post"
  *      },
  *      itemOperations={
  *          "get" = {
- *              "normalization_context" = {"groups"={"mobile:io:get"}, "swagger_definition_name"="detail"},
+ *              "normalization_context" = {"groups"={"mobile:read:item"}},
  *              "security"="is_granted('ROLE_USER')",
  *              "security_message"="Only authenticated users can assess this operation."
  *          },
+ *          "patch",
+ *          "delete"
  *      },
  * )
  */
@@ -35,31 +48,31 @@ class Mobile
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"mobile:co:get","mobile:io:get"})
+     * @Groups({"mobile:read","mobile:read:item"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"mobile:co:get","mobile:io:get"})
+     * @Groups({"mobile:read","mobile:read:item"})
      */
     private $modelName;
 
     /**
      * @ORM\Column(type="text")
-     * @Groups({"mobile:io:get"})
+     * @Groups({"mobile:read:item"})
      */
     private $description;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"mobile:co:get","mobile:io:get"})
+     * @Groups({"mobile:read","mobile:read:item"})
      */
     private $price;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"mobile:co:get","mobile:io:get"})
+     * @Groups({"mobile:read","mobile:read:item"})
      */
     private $stock;
 
