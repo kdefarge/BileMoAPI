@@ -35,3 +35,5 @@ services:
     App\OpenApi\JwtDecorator:
         decorates: "api_platform.openapi.factory"
         autoconfigure: false
+
+    App\DataPersister\CustumerDataPersister: ~
