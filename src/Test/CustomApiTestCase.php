@@ -120,4 +120,9 @@ class CustomApiTestCase extends ApiTestCase
 
         return $response->toArray()['token'];
     }
+
+    protected function retrieveTokenFixtures(Client $client, string $userName) : string
+    {
+        return $this->retrieveToken($client, $userName.'@example.org', 'toctoc');
+    }
 }

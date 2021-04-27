@@ -8,12 +8,14 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=MobileRepository::class)
  * @ApiResource(
  *      attributes={
- *          "formats"={"jsonld","json"},
+ *          "formats"={"json"},
  *          "security"="is_granted('ROLE_ADMIN')"
  *      },
  *      normalizationContext={
@@ -29,7 +31,9 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *              "security"="is_granted('ROLE_USER')",
  *              "security_message"="Only authenticated users can assess this operation."
  *          },
- *          "post"
+ *          "post" = {
+ *              "normalization_context" = {"groups"={"mobile:read:item"}}
+ *          }
  *      },
  *      itemOperations={
  *          "get" = {
@@ -37,10 +41,13 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *              "security"="is_granted('ROLE_USER')",
  *              "security_message"="Only authenticated users can assess this operation."
  *          },
- *          "patch",
+ *          "patch" = {
+ *              "normalization_context" = {"groups"={"mobile:read:item"}}
+ *          },
  *          "delete"
  *      },
  * )
+ * @UniqueEntity(fields={"modelName"})
  */
 class Mobile
 {
@@ -53,26 +60,30 @@ class Mobile
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     * @Groups({"mobile:read","mobile:read:item"})
+     * @ORM\Column(type="string", length=255, unique=true)
+     * @Groups({"mobile:read","mobile:read:item","mobile:write"})
+     * @Assert\NotBlank()
      */
     private $modelName;
 
     /**
      * @ORM\Column(type="text")
-     * @Groups({"mobile:read:item"})
+     * @Groups({"mobile:read:item","mobile:write"})
+     * @Assert\NotBlank()
      */
     private $description;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"mobile:read","mobile:read:item"})
+     * @Groups({"mobile:read","mobile:read:item","mobile:write"})
+     * @Assert\NotBlank()
      */
     private $price;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"mobile:read","mobile:read:item"})
+     * @Groups({"mobile:read","mobile:read:item","mobile:write"})
+     * @Assert\NotBlank()
      */
     private $stock;
 
