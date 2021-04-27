@@ -8,29 +8,47 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ApiResource(
  *      attributes={
- *          "formats"={"jsonld","json"},
- *          "security"="is_granted('ROLE_ADMIN')"
+ *          "formats"={"json"},
+ *          "security"="is_granted('ROLE_USER')"
  *      },
  *      normalizationContext={
- *          "groups"={"user:read"},
+ *          "groups"="user:read",
  *          "swagger_definition_name"="read"
  *      },
  *      denormalizationContext={
- *          "groups"={"user:write"},
+ *          "groups"="user:write",
  *          "swagger_definition_name"="write"
  *      },
- *      collectionOperations={"get", "post"},
- *      itemOperations={"patch", "delete",
+ *      collectionOperations={
+ *          "get",
+ *          "post" = {
+ *              "normalization_context" = {"groups"={"user:write","user:read:item"}},
+ *              "validation_groups"={"Default", "user:create"}
+ *          }
+ *      },
+ *      itemOperations={
  *          "get" = {
- *              "normalization_context" = {"groups"={"user:read:item"}, "swagger_definition_name"="read-item"},
- *          }, 
+ *              "normalization_context" = {"groups"={"user:read:item"}},
+ *              "security"="is_granted('ROLE_ADMIN') or is_granted('OWNER', object.getCustumer())"
+ *          },
+ *          "patch" = {
+ *              "normalization_context" = {"groups"={"user:read:item"}},
+ *              "security"="is_granted('ROLE_ADMIN') or is_granted('OWNER', object.getCustumer())"
+ *          },
+ *          "delete" = {
+ *              "security"="is_granted('ROLE_ADMIN') or is_granted('OWNER', object.getCustumer())"
+ *          }
  *      },
  * )
+ * @UniqueEntity(fields={"email"})
+ * @ORM\EntityListeners({"App\Doctrine\UserListingSetOwnerListener"})
  */
 class User
 {
@@ -38,7 +56,7 @@ class User
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"user:write","user:read","user:read:item"})
+     * @Groups({"user:read","user:read:item"})
      */
     private $id;
 
