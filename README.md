@@ -88,7 +88,9 @@ php bin/phpunit
 
 ```bash
 php bin/phpunit --filter testLoginJWT
-php bin/phpunit --filter testReadMobile
+php bin/phpunit --filter testReadMobilesList
+php bin/phpunit --filter testReadMobilesItem
+php bin/phpunit --filter testWriteMobile
 ```
 
 ### Test other database

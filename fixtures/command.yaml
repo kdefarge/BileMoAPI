@@ -10,9 +10,10 @@ App\Entity\Command:
     status: '<randomElement(<{status}>)>'
     created_date: '<dateTimeInInterval("-200 days", "-50 days", "Europe/Paris")>'
     updated_date: '<dateTimeInInterval($created_date, "-1 days", "Europe/Paris")>'
-    __calls:
-      - addMobile: ['@mobile*']
-      - addMobile (75%?): ['@mobile*']
-      - addMobile (50%?): ['@mobile*']
-      - addMobile (25%?): ['@mobile*']
-      - addMobile (25%?): ['@mobile*']
+    mobiles: '<numberBetween(1, 10)>x @mobile*'
+    # __calls:
+    #   - addMobile: ['@mobile*']
+    #   - addMobile (75%?): ['@mobile*']
+    #   - addMobile (50%?): ['@mobile*']
+    #   - addMobile (25%?): ['@mobile*']
+    #   - addMobile (25%?): ['@mobile*']
