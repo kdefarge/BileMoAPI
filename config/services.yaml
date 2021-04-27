@@ -37,3 +37,6 @@ services:
         autoconfigure: false
 
     App\DataPersister\CustumerDataPersister: ~
+
+    App\Doctrine\UserListingSetOwnerListener:
+        tags: [doctrine.orm.entity_listener]
