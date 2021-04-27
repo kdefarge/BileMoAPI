@@ -77,7 +77,7 @@ class User
     private $custumer;
 
     /**
-     * @ORM\OneToMany(targetEntity=Command::class, mappedBy="user")
+     * @ORM\OneToMany(targetEntity=Command::class, mappedBy="user", orphanRemoval=true)
      */
     private $commands;
 

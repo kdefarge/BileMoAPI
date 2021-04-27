@@ -9,21 +9,43 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * @ORM\Entity(repositoryClass=CustumerRepository::class)
  * @ApiResource(
  *      attributes={
- *          "formats"={"jsonld","json"},
+ *          "formats"={"json"},
  *          "security"="is_granted('ROLE_ADMIN')"
  *      },
+ *      normalizationContext={
+ *          "groups"="custumer:read",
+ *          "swagger_definition_name"="read"
+ *      },
+ *      denormalizationContext={
+ *          "groups"="custumer:write",
+ *          "swagger_definition_name"="write"
+ *      },
  *      collectionOperations={
- *          "get", "post"
+ *          "get",
+ *          "post" = {
+ *              "normalization_context" = {"groups"={"custumer:write","custumer:read:item"}},
+ *              "validation_groups"={"Default", "custumer:create"}
+ *          }
  *      },
  *      itemOperations={
- *          "patch", "delete", "get"
+ *          "get" = {
+ *              "normalization_context" = {"groups"={"custumer:read:item"}}
+ *          },
+ *          "patch" = {
+ *              "normalization_context" = {"groups"={"custumer:read:item"}}
+ *          },
+ *          "delete"
  *      },
  * )
+ * @UniqueEntity(fields={"email"})
  */
 class Custumer implements UserInterface
 {
@@ -31,11 +53,14 @@ class Custumer implements UserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"custumer:read","custumer:read:item"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Groups({"custumer:read","custumer:read:item","custumer:write"})
+     * @Assert\NotBlank()
      */
     private $email;
 
@@ -52,11 +77,15 @@ class Custumer implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"custumer:read","custumer:read:item","custumer:write"})
+     * @Assert\NotBlank()
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"custumer:read","custumer:read:item","custumer:write"})
+     * @Assert\NotBlank()
      */
     private $fullname;
 
@@ -74,6 +103,13 @@ class Custumer implements UserInterface
      * @ORM\OneToMany(targetEntity=User::class, mappedBy="custumer", orphanRemoval=true)
      */
     private $users;
+
+    /**
+     * @Groups("custumer:write")
+     * @SerializedName("password")
+     * @Assert\NotBlank(groups={"custumer:create"})
+     */
+    private $plainPassword;
 
     public function __construct()
     {
@@ -160,6 +196,7 @@ class Custumer implements UserInterface
     public function eraseCredentials()
     {
         // If you store any temporary, sensitive data on the user, clear it here
+        $this->plainPassword = null;
     }
 
     public function getName(): ?string
@@ -236,6 +273,18 @@ class Custumer implements UserInterface
                 $user->setCustumer(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPlainPassword(): ?string
+    {
+        return $this->plainPassword;
+    }
+
+    public function setPlainPassword(string $plainPassword): self
+    {
+        $this->plainPassword = $plainPassword;
 
         return $this;
     }

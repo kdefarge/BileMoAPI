@@ -39,7 +39,7 @@ class MobileResourceTest extends CustomApiTestCase
             'auth_bearer' => $adminToken
         ]);
 
-        // Check that a user can see the list of mobiles
+        // Check that an admin can see the list of mobiles
         $this->assertResponseStatusCodeSame(200);
     }
 
@@ -168,7 +168,7 @@ class MobileResourceTest extends CustomApiTestCase
             ],
             'auth_bearer' => $adminToken
         ]);
-        
+
         // Check admin delete mobile
         $this->assertResponseStatusCodeSame(204);
     }
