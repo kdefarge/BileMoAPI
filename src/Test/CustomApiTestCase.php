@@ -8,6 +8,7 @@ use App\Entity\Command;
 use App\Entity\Custumer;
 use App\Entity\Mobile;
 use App\Entity\User;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
 class CustomApiTestCase extends ApiTestCase
@@ -73,7 +74,7 @@ class CustomApiTestCase extends ApiTestCase
         $command = new Command();
 
         $command->setUser($user);
-        foreach($mobiles as $mobile) {
+        foreach ($mobiles as $mobile) {
             $command->addMobile($mobile);
         }
         $command->setStatus($status);
@@ -99,7 +100,7 @@ class CustomApiTestCase extends ApiTestCase
         $entityManager->flush();
     }
 
-    protected function getRepository($entityClass)
+    protected function getRepository($entityClass): ServiceEntityRepository
     {
         return $this->getEntityManager()->getRepository($entityClass);
     }
@@ -121,8 +122,8 @@ class CustomApiTestCase extends ApiTestCase
         return $response->toArray()['token'];
     }
 
-    protected function retrieveTokenFixtures(Client $client, string $userName) : string
+    protected function retrieveTokenFixtures(Client $client, string $userName): string
     {
-        return $this->retrieveToken($client, $userName.'@example.org', 'toctoc');
+        return $this->retrieveToken($client, $userName . '@example.org', 'toctoc');
     }
 }
