@@ -38,13 +38,13 @@ class UsersResourceTest extends CustomApiTestCase
         $custumer = $this->getRepository(Custumer::class)
             ->findOneBy(['email' => 'user1@example.org']);
 
-        $totalItems = intval($this->getRepository(User::class)
+        $totalItems = (int) $this->getRepository(User::class)
             ->createQueryBuilder('u')
             ->select('count(u.id)')
             ->andWhere('u.custumer = :val')
             ->setParameter('val', $custumer)
             ->getQuery()
-            ->getSingleScalarResult());
+            ->getSingleScalarResult();
 
         $array = ['hydra:totalItems' => $totalItems];
         $this->assertJsonContains($array);
