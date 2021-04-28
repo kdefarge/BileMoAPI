@@ -84,13 +84,14 @@ php bin/console hautelook:fixtures:load
 php bin/phpunit
 ```
 
-### Run one test
+### Run one part test
 
 ```bash
 php bin/phpunit --filter testLoginJWT
-php bin/phpunit --filter testReadMobilesList
-php bin/phpunit --filter testReadMobilesItem
-php bin/phpunit --filter testWriteMobile
+php bin/phpunit --filter testMobile
+php bin/phpunit --filter testCustumer
+php bin/phpunit --filter testUsers
+php bin/phpunit --filter testCommands
 ```
 
 ### Test other database

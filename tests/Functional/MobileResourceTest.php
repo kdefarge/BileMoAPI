@@ -11,7 +11,7 @@ class MobileResourceTest extends CustomApiTestCase
 
     private $requestLink = '/api/mobiles';
 
-    public function testReadMobilesList()
+    public function testMobileReadList()
     {
         $client = self::createClient();
 
@@ -43,7 +43,7 @@ class MobileResourceTest extends CustomApiTestCase
         $this->assertResponseStatusCodeSame(200);
     }
 
-    public function testReadMobilesItem()
+    public function testMobileReadItem()
     {
         $client = self::createClient();
 
@@ -89,7 +89,7 @@ class MobileResourceTest extends CustomApiTestCase
         $this->assertResponseStatusCodeSame(404);
     }
 
-    public function testWriteMobile()
+    public function testMobileWrite()
     {
         $client = self::createClient();
 
