@@ -15,7 +15,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ApiResource(
  *      attributes={
- *          "formats"={"json"},
+ *          "formats"={"jsonld", "json"},
  *          "security"="is_granted('ROLE_USER')"
  *      },
  *      normalizationContext={
