@@ -13,14 +13,35 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * @ORM\Entity(repositoryClass=CommandRepository::class)
  * @ApiResource(
  *      attributes={
- *          "formats"={"jsonld","json"},
+ *          "formats"={"jsonld", "json"},
  *          "security"="is_granted('ROLE_ADMIN')"
  *      },
+ *      normalizationContext={
+ *          "groups"="command:read",
+ *          "swagger_definition_name"="read"
+ *      },
+ *      denormalizationContext={
+ *          "groups"="command:write",
+ *          "swagger_definition_name"="write"
+ *      },
  *      collectionOperations={
- *          "get", "post"
+ *          "get" = {
+ *              "security"="is_granted('ROLE_USER')",
+ *          },
+ *          "post" = {
+ *              "security"="is_granted('ROLE_USER')",
+ *              "normalization_context" = {"groups"={"command:write","command:read:item"}}
+ *          }
  *      },
  *      itemOperations={
- *          "patch", "delete", "get"
+ *          "get" = {
+ *              "security"="is_granted('ROLE_USER')",
+ *              "normalization_context" = {"groups"={"command:read:item"}}
+ *          },
+ *          "patch" = {
+ *              "normalization_context" = {"groups"={"command:update"}},
+ *              "denormalization_context" = {"groups"={"command:update"}}
+ *          }
  *      },
  * )
  */
@@ -35,11 +56,13 @@ class Command
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"command:read","command:read:item"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", columnDefinition="ENUM('En attente', 'Validé', 'En cours', 'Terminé')")
+     * @Groups({"command:read","command:read:item","command:update"})
      */
     private $status;
 
@@ -55,11 +78,13 @@ class Command
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="commands")
+     * @Groups({"command:read","command:read:item","command:write"})
      */
     private $user;
 
     /**
      * @ORM\ManyToMany(targetEntity=Mobile::class, mappedBy="commands")
+     * @Groups({"command:read","command:read:item","command:write"})
      */
     private $mobiles;
 
