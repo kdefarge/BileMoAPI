@@ -115,10 +115,18 @@ php bin/console doctrine:database:create --env=test
 php bin/console doctrine:schema:create --env=test
 ```
 
+## Tools used
+
+-   [Symfony](https://github.com/symfony/symfony)
+-   [API Platform](https://github.com/api-platform/api-platform)
+-   [LexikJWTAuthenticationBundle](https://github.com/lexik/LexikJWTAuthenticationBundle)
+-   [PHPUnit](https://github.com/sebastianbergmann/phpunit)
+-   [AliceBundle](https://github.com/hautelook/AliceBundle)
+
 ## Maintainers
 
 [@kdefarge](https://github.com/kdefarge)
 
 ## License
 
-[MIT](LICENSE) © Kévin DEFARGE
+[MIT](https://github.com/kdefarge/BileMoAPI/blob/master/LICENSE.md) © Kévin DEFARGE
