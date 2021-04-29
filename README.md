@@ -103,6 +103,17 @@ php bin/console doctrine:database:create --env=test
 php bin/console doctrine:schema:create --env=test
 ```
 
+## Running Snowtrick Application
+
+```bash
+cd snowtrick
+symfony server:start
+```
+
+Open your browser and navigate to http://localhost:8000/. If everything is working, you’ll see a welcome page. Later, when you are finished working, stop the server by pressing Ctrl+C from your terminal.
+
+To access the API documentation navigate to https://localhost:8000/docs
+
 ## Maintainers
 
 [@kdefarge](https://github.com/kdefarge)
