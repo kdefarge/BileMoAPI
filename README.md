@@ -9,6 +9,7 @@ BileMoAPI is a Symfony API application with [api-platform](https://github.com/ap
 
 -   [Installation](#Installation)
 -   [Setup](#Setup)
+-   [Running BileMo API](#Running-BileMo-API)
 -   [Fixture](#Fixture)
 -   [Test](#Test)
 -   [Maintainers](#Maintainers)
@@ -60,6 +61,17 @@ JWT_PASSPHRASE=b11c0ae29c7f88b75d5e71281f38ac69
 ###< lexik/jwt-authentication-bundle ###
 ```
 
+## Running BileMo API
+
+```bash
+cd snowtrick
+symfony server:start
+```
+
+Open your browser and navigate to http://localhost:8000/. If everything is working, you’ll see a welcome page. Later, when you are finished working, stop the server by pressing Ctrl+C from your terminal.
+
+To access the API documentation navigate to https://localhost:8000/docs
+
 ## Fixture
 
 ### Run dev fixture
@@ -102,17 +114,6 @@ Update .env.test and DATABASE_URL then create the database with schema
 php bin/console doctrine:database:create --env=test
 php bin/console doctrine:schema:create --env=test
 ```
-
-## Running Snowtrick Application
-
-```bash
-cd snowtrick
-symfony server:start
-```
-
-Open your browser and navigate to http://localhost:8000/. If everything is working, you’ll see a welcome page. Later, when you are finished working, stop the server by pressing Ctrl+C from your terminal.
-
-To access the API documentation navigate to https://localhost:8000/docs
 
 ## Maintainers
 
