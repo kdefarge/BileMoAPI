@@ -17,7 +17,7 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
  * @ORM\Entity(repositoryClass=CustumerRepository::class)
  * @ApiResource(
  *      attributes={
- *          "formats"={"json"},
+ *          "formats"={"jsonld", "json"},
  *          "security"="is_granted('ROLE_ADMIN')"
  *      },
  *      normalizationContext={
