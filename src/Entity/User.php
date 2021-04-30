@@ -56,7 +56,7 @@ class User
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"user:read","user:read:item"})
+     * @Groups({"user:read","user:read:item","command:read:item"})
      */
     private $id;
 
@@ -91,11 +91,13 @@ class User
     /**
      * @ORM\ManyToOne(targetEntity=Custumer::class, inversedBy="users")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"command:read:item"})
      */
     private $custumer;
 
     /**
      * @ORM\OneToMany(targetEntity=Command::class, mappedBy="user", orphanRemoval=true)
+     * @Groups({"user:read:item"})
      */
     private $commands;
 

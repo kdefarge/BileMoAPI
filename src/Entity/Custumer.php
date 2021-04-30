@@ -53,13 +53,13 @@ class Custumer implements UserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"custumer:read","custumer:read:item"})
+     * @Groups({"custumer:read","custumer:read:item","command:read:item"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
-     * @Groups({"custumer:read","custumer:read:item","custumer:write"})
+     * @Groups({"custumer:read","custumer:read:item","custumer:write","command:read:item"})
      * @Assert\NotBlank()
      */
     private $email;
@@ -77,14 +77,14 @@ class Custumer implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"custumer:read","custumer:read:item","custumer:write"})
+     * @Groups({"custumer:read","custumer:read:item","custumer:write","command:read:item"})
      * @Assert\NotBlank()
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"custumer:read","custumer:read:item","custumer:write"})
+     * @Groups({"custumer:read","custumer:read:item","custumer:write","command:read:item"})
      * @Assert\NotBlank()
      */
     private $fullname;

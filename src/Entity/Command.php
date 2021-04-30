@@ -56,13 +56,13 @@ class Command
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"command:read","command:read:item"})
+     * @Groups({"command:read","command:read:item","user:read:item"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", columnDefinition="ENUM('En attente', 'Validé', 'En cours', 'Terminé')")
-     * @Groups({"command:read","command:read:item","command:update"})
+     * @Groups({"command:read","command:read:item","command:update","user:read:item"})
      */
     private $status;
 
@@ -78,13 +78,13 @@ class Command
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="commands")
-     * @Groups({"command:read","command:read:item","command:write"})
+     * @Groups({"command:read:item","command:write"})
      */
     private $user;
 
     /**
      * @ORM\ManyToMany(targetEntity=Mobile::class, mappedBy="commands")
-     * @Groups({"command:read","command:read:item","command:write"})
+     * @Groups({"command:read:item","command:write","user:read:item"})
      */
     private $mobiles;
 
