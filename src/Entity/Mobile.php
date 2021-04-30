@@ -55,13 +55,13 @@ class Mobile
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"mobile:read","mobile:read:item"})
+     * @Groups({"mobile:read","mobile:read:item","user:read:item","command:read:item"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255, unique=true)
-     * @Groups({"mobile:read","mobile:read:item","mobile:write"})
+     * @Groups({"mobile:read","mobile:read:item","mobile:write","user:read:item","command:read:item"})
      * @Assert\NotBlank()
      */
     private $modelName;
@@ -75,7 +75,7 @@ class Mobile
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"mobile:read","mobile:read:item","mobile:write"})
+     * @Groups({"mobile:read","mobile:read:item","mobile:write","user:read:item","command:read:item"})
      * @Assert\NotBlank()
      */
     private $price;

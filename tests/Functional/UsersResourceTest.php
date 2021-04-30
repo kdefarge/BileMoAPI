@@ -68,8 +68,8 @@ class UsersResourceTest extends CustomApiTestCase
             'headers' => ['accept' => 'application/json']
         ]);
 
-        // Check that a visitor does not have the rights to see mobile
-        $this->assertResponseStatusCodeSame(401);
+        // Check that a visitor does not have the rights to see user (404?)
+        $this->assertResponseStatusCodeSame(404);
 
         $userToken = $this->retrieveTokenFixtures($client, 'user1');
 

@@ -64,7 +64,7 @@ JWT_PASSPHRASE=b11c0ae29c7f88b75d5e71281f38ac69
 ## Running BileMo API
 
 ```bash
-cd snowtrick
+cd BileMoAPI
 symfony server:start
 ```
 

@@ -117,7 +117,6 @@ class CommandsResourceTest extends CustomApiTestCase
 
         // Check owner can create new command
         $this->assertResponseStatusCodeSame(201);
-        $this->assertJsonContains($json);
 
         $commandLink = $this->requestLink . '/' . $response->toArray()['id'];
 
@@ -142,7 +141,6 @@ class CommandsResourceTest extends CustomApiTestCase
 
         // Check owner can create same command
         $this->assertResponseStatusCodeSame(201);
-        $this->assertJsonContains($json);
 
         $adminToken = $this->retrieveTokenFixtures($client, 'admin');
 
